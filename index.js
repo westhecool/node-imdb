@@ -37,8 +37,8 @@ async function getMetaRaw(id) {
     return json;
 }
 
-async function getEpisodesRaw(id) {
-    const response = await fetch(`https://www.imdb.com/title/${id}/episodes`, {
+async function getEpisodesRaw(id, season = 1) {
+    const response = await fetch(`https://www.imdb.com/title/${id}/episodes?season=${season}`, {
         headers: {
             'User-Agent': USER_AGENT
         }
