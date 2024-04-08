@@ -1,0 +1,15 @@
+{
+  "name": "imdb",
+  "version": "1.0.0",
+  "description": "A simple client for the IMDB website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "westhecool",
+  "license": "ISC",
+  "dependencies": {
+    "jsdom": "^24.0.0"
+  }
+}
