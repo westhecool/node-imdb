@@ -1,5 +1,5 @@
 {
-  "name": "imdb",
+  "name": "imdb-client",
   "version": "1.0.0",
   "description": "A simple client for the IMDB website",
   "main": "index.js",
