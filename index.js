@@ -75,6 +75,8 @@ async function getMetaParsed(id) { // TODO: add more data
             for (const character of castMember.node.characters) {
                 characters.push(character.name);
             }
+        } else {
+            characters = null;
         }
         cast.push({
             id: castMember.node.name.id,
@@ -122,9 +124,54 @@ async function getMetaParsed(id) { // TODO: add more data
     }
 }
 
+async function getEpisodesParsed(id, season = 1) {
+    const _episodes = await getEpisodesRaw(id, season);
+    var episodes = [];
+    for (const episode of _episodes.props.pageProps.contentData.section.episodes.items) {
+        episodes.push({
+            id: episode.id,
+            title: episode.title,
+            season: episode.season,
+            episode: episode.episode,
+            title: episode.titleText,
+            releaseDate: episode.releaseDate ? {
+                day: episode.releaseDate.day,
+                month: episode.releaseDate.month,
+                year: episode.releaseDate.year
+            } : null,
+            releaseYear: episode.releaseYear,
+            image: {
+                url: episode.image.url,
+                width: episode.image.maxWidth,
+                height: episode.image.maxHeight
+            },
+            plot: episode.plot,
+            rating: episode.aggregateRating
+        });
+    }
+    return episodes;
+}
+
+async function getAllParsed(id) {
+    const meta = await getMetaParsed(id);
+    var data = {
+        meta,
+        episodes: null
+    }
+    if (meta.isSeries) {
+        data.episodes = [];
+        for (var season = 1; season <= meta.seasons; season++) {
+            data.episodes = data.episodes.concat(await getEpisodesParsed(id, season));
+        }
+    }
+    return data;
+}
+
 module.exports = {
     search,
     getMetaRaw,
     getEpisodesRaw,
-    getMetaParsed
+    getMetaParsed,
+    getEpisodesParsed,
+    getAllParsed
 }
