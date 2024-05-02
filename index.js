@@ -49,8 +49,82 @@ async function getEpisodesRaw(id, season = 1) {
     return json;
 }
 
+async function getMetaParsed(id) { // TODO: add more data
+    const meta = await getMetaRaw(id);
+    var keywords = [];
+    for (const keyword of meta.props.pageProps.aboveTheFoldData.keywords.edges) {
+        keywords.push(keyword.node.text);
+    }
+    var genres = [];
+    for (const genre of meta.props.pageProps.aboveTheFoldData.genres.genres) {
+        genres.push(genre.text);
+    }
+    var images = [];
+    for (const image of meta.props.pageProps.mainColumnData.titleMainImages.edges) {
+        images.push({
+            id: image.node.id,
+            url: image.node.url,
+            width: image.node.width,
+            height: image.node.height
+        });
+    }
+    var cast = [];
+    for (const castMember of meta.props.pageProps.mainColumnData.cast.edges) {
+        var characters = [];
+        if (castMember.node.characters) {
+            for (const character of castMember.node.characters) {
+                characters.push(character.name);
+            }
+        }
+        cast.push({
+            id: castMember.node.name.id,
+            name: castMember.node.name.nameText.text,
+            image: castMember.node.name.primaryImage ? {
+                url: castMember.node.name.primaryImage.url,
+                width: castMember.node.name.primaryImage.width,
+                height: castMember.node.name.primaryImage.height
+            } : null,
+            characters
+        });
+    }
+    return {
+        id: meta.props.pageProps.aboveTheFoldData.id,
+        productionStatus: meta.props.pageProps.aboveTheFoldData.productionStatus.currentProductionStage.text,
+        title: meta.props.pageProps.aboveTheFoldData.titleText.text,
+        titleType: meta.props.pageProps.aboveTheFoldData.titleType.text,
+        isSeries: meta.props.pageProps.aboveTheFoldData.titleType.isSeries,
+        isEpisode: meta.props.pageProps.aboveTheFoldData.titleType.isEpisode,
+        originalTitle: meta.props.pageProps.aboveTheFoldData.originalTitleText.text,
+        certificateRating: meta.props.pageProps.aboveTheFoldData.certificate.rating,
+        releaseYearRange: {
+            start: meta.props.pageProps.aboveTheFoldData.releaseYear.year,
+            end: meta.props.pageProps.aboveTheFoldData.releaseYear.endYear
+        },
+        releaseDate: {
+            day: meta.props.pageProps.aboveTheFoldData.releaseDate.day,
+            month: meta.props.pageProps.aboveTheFoldData.releaseDate.month,
+            year: meta.props.pageProps.aboveTheFoldData.releaseDate.year
+        },
+        runtime: meta.props.pageProps.aboveTheFoldData.runtime ? meta.props.pageProps.aboveTheFoldData.runtime.seconds : null,
+        rating: meta.props.pageProps.aboveTheFoldData.ratingsSummary.aggregateRating,
+        image: {
+            id: meta.props.pageProps.aboveTheFoldData.primaryImage.id,
+            url: meta.props.pageProps.aboveTheFoldData.primaryImage.url,
+            width: meta.props.pageProps.aboveTheFoldData.primaryImage.width,
+            height: meta.props.pageProps.aboveTheFoldData.primaryImage.height
+        },
+        keywords,
+        genres,
+        episodes: meta.props.pageProps.aboveTheFoldData.titleType.isSeries ? meta.props.pageProps.mainColumnData.episodes.episodes.total : null,
+        seasons: meta.props.pageProps.aboveTheFoldData.titleType.isSeries ? meta.props.pageProps.mainColumnData.episodes.seasons.length : null,
+        images,
+        cast
+    }
+}
+
 module.exports = {
     search,
     getMetaRaw,
-    getEpisodesRaw
+    getEpisodesRaw,
+    getMetaParsed
 }
