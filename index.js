@@ -97,11 +97,12 @@ async function getMetaParsed(id) { // TODO: add more data
         isSeries: meta.props.pageProps.aboveTheFoldData.titleType.isSeries,
         isEpisode: meta.props.pageProps.aboveTheFoldData.titleType.isEpisode,
         originalTitle: meta.props.pageProps.aboveTheFoldData.originalTitleText.text,
-        certificateRating: meta.props.pageProps.aboveTheFoldData.certificate.rating,
+        certificateRating:  meta.props.pageProps.aboveTheFoldData.certificate ? meta.props.pageProps.aboveTheFoldData.certificate.rating : null,
         releaseYearRange: {
             start: meta.props.pageProps.aboveTheFoldData.releaseYear.year,
             end: meta.props.pageProps.aboveTheFoldData.releaseYear.endYear
         },
+        releaseYear: meta.props.pageProps.aboveTheFoldData.releaseYear.year,
         releaseDate: {
             day: meta.props.pageProps.aboveTheFoldData.releaseDate.day,
             month: meta.props.pageProps.aboveTheFoldData.releaseDate.month,
