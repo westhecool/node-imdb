@@ -11,5 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "jsdom": "^24.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/westhecool/node-imdb.git"
+  },
+  "homepage": "https://github.com/westhecool/node-imdb"
 }
