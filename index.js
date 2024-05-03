@@ -94,6 +94,7 @@ async function getMetaParsed(id) { // TODO: add more data
         productionStatus: meta.props.pageProps.aboveTheFoldData.productionStatus.currentProductionStage.text,
         title: meta.props.pageProps.aboveTheFoldData.titleText.text,
         titleType: meta.props.pageProps.aboveTheFoldData.titleType.text,
+        plot: meta.props.pageProps.aboveTheFoldData.plot.plotText.plainText,
         isSeries: meta.props.pageProps.aboveTheFoldData.titleType.isSeries,
         isEpisode: meta.props.pageProps.aboveTheFoldData.titleType.isEpisode,
         originalTitle: meta.props.pageProps.aboveTheFoldData.originalTitleText.text,
