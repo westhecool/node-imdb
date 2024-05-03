@@ -110,12 +110,12 @@ async function getMetaParsed(id) { // TODO: add more data
         },
         runtime: meta.props.pageProps.aboveTheFoldData.runtime ? meta.props.pageProps.aboveTheFoldData.runtime.seconds : null,
         rating: meta.props.pageProps.aboveTheFoldData.ratingsSummary.aggregateRating,
-        image: {
+        image: meta.props.pageProps.aboveTheFoldData.primaryImage ? {
             id: meta.props.pageProps.aboveTheFoldData.primaryImage.id,
             url: meta.props.pageProps.aboveTheFoldData.primaryImage.url,
             width: meta.props.pageProps.aboveTheFoldData.primaryImage.width,
             height: meta.props.pageProps.aboveTheFoldData.primaryImage.height
-        },
+        } : null,
         keywords,
         genres,
         episodes: meta.props.pageProps.aboveTheFoldData.titleType.isSeries ? meta.props.pageProps.mainColumnData.episodes.episodes.total : null,
