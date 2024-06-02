@@ -119,8 +119,8 @@ async function getMetaParsed(id) { // TODO: add more data
         } : null,
         keywords,
         genres,
-        episodes: meta.props.pageProps.aboveTheFoldData.titleType.isSeries ? meta.props.pageProps.mainColumnData.episodes.episodes.total : null,
-        seasons: meta.props.pageProps.aboveTheFoldData.titleType.isSeries ? meta.props.pageProps.mainColumnData.episodes.seasons.length : null,
+        episodes: meta.props.pageProps.mainColumnData.episodes ? meta.props.pageProps.mainColumnData.episodes.episodes.total : null,
+        seasons: meta.props.pageProps.mainColumnData.episodes ? meta.props.pageProps.mainColumnData.episodes.seasons.length : null,
         images,
         cast
     }
